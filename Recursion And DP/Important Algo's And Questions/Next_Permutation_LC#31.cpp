@@ -2,7 +2,7 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-
+ //Find the breaking index by scanning from the last... Then find the minimum Largest by Scanning from the index till index(Exclusive)... the swap and reverse the array from index till last
 void nextPermutation(vector<int>& nums) {
     int index = -1;
     int n = nums.size();
