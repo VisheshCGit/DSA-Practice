@@ -5,30 +5,32 @@ using namespace std;
 
 vector<int> majorityElement(vector<int>& nums) {
     int n = nums.size();
- // Moore Voting algo
-    int candidate1 = INT_MIN;
-    int candidate2 = INT_MIN;
+
+    int E1 = INT_MIN;
+    int E2 = INT_MIN;
 
     int count1 = 0;
     int count2 = 0;
 
-    // First pass: find possible candidates
-    for(int i = 0; i < n; i++) {
+    // Find potential majority elements
+    for(int i = 0; i < n; i++) {   //Moore Voting Algorithm is used... There can be at most k-1 elements which are appearing more than n/k times
 
-        if(nums[i] == candidate1)
+        if(count1 == 0 && nums[i] != E2) {   //Both E1 and E2 can't be same... We are looking for 2 Different Candidates
+            E1 = nums[i];
             count1++;
-
-        else if(nums[i] == candidate2)
-            count2++;
-
-        else if(count1 == 0) {
-            candidate1 = nums[i];
-            count1 = 1;
         }
 
-        else if(count2 == 0) {
-            candidate2 = nums[i];
-            count2 = 1;
+        else if(count2 == 0 && nums[i] != E1) {
+            E2 = nums[i];  //Important Steps = the IF-Else conditions 
+            count2++;
+        }
+
+        else if(nums[i] == E1) {
+            count1++;
+        }
+
+        else if(nums[i] == E2) {
+            count2++;
         }
 
         else {
@@ -37,24 +39,24 @@ vector<int> majorityElement(vector<int>& nums) {
         }
     }
 
-    // Second pass: verify frequencies
+    // Verify frequencies
     count1 = 0;
     count2 = 0;
 
     for(int i = 0; i < n; i++) {
-        if(nums[i] == candidate1)
+        if(nums[i] == E1)
             count1++;
-        else if(nums[i] == candidate2)
+        else if(nums[i] == E2)
             count2++;
     }
 
     vector<int> ans;
 
     if(count1 > n / 3)
-        ans.push_back(candidate1);
+        ans.push_back(E1);
 
     if(count2 > n / 3)
-        ans.push_back(candidate2);
+        ans.push_back(E2);
 
     return ans;
 }
@@ -79,8 +81,9 @@ int main() {
     }
     else {
         cout << "Elements appearing more than n/3 times: ";
-        for(int num : ans)
+        for(int num : ans) {
             cout << num << " ";
+        }
         cout << endl;
     }
 
