@@ -12,5 +12,5 @@ Platform: LeetCode
 ...
 
 ## Structure
-Each folder contains solutions with logic comments.
+Each folder contains solutions with logic/comments.
 Folder is Organized according to topics and patterns!!
