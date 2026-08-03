@@ -1,21 +1,32 @@
 #include <iostream>
-#include <vector>
 #include <unordered_set>
 using namespace std;
 
 class Solution{
 public:
-    bool containsDuplicate(vector<int> &nums){
+    bool isHappy(int n){
         unordered_set<int> st;
 
-        for(int x:nums){
-            if(st.find(x)!=st.end())
-                return true;
+        st.insert(n);
 
-            st.insert(x);
+        while(n!=1){
+
+            int sum=0;
+
+            while(n){
+                int rem=n%10;
+                sum+=rem*rem;
+                n/=10;
+            }
+
+            if(st.find(sum)!=st.end())
+                return false;
+
+            st.insert(sum);
+            n=sum;
         }
 
-        return false;
+        return true;
     }
 };
 
@@ -23,19 +34,12 @@ int main(){
 
     int n;
 
-    cout<<"Enter number of elements: ";
+    cout<<"Enter a number: ";
     cin>>n;
-
-    vector<int> nums(n);
-
-    cout<<"Enter array elements: ";
-
-    for(int &x:nums)
-        cin>>x;
 
     Solution obj;
 
-    if(obj.containsDuplicate(nums))
+    if(obj.isHappy(n))
         cout<<"True";
     else
         cout<<"False";
